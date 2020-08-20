@@ -9,6 +9,7 @@ import NavBar from '../../features/nav/NavBar';
 
 import { Container } from 'semantic-ui-react';
 import Sandbox from '../../features/sandbox/Sandbox';
+import ModalManager from '../common/modals/ModalManager';
 
 function App() {
   // use unique key property from location to force UI to refresh EventForm if going from
@@ -17,6 +18,7 @@ function App() {
   const { key } = useLocation();
   return (
     <>
+      <ModalManager />
       <Route path="/" exact component={HomePage} />
       <Route
         path={'/(.+)'}
