@@ -13,13 +13,10 @@ import 'react-calendar/dist/Calendar.css';
 
 import { configureStore } from './app/store/configureStore';
 import ScrollToTop from './app/layout/ScrollToTop';
-import { loadEvents } from './features/events/eventActions';
 
 const rootEl = document.getElementById('root');
 
 const store = configureStore();
-
-store.dispatch(loadEvents());
 
 function render() {
   ReactDOM.render(

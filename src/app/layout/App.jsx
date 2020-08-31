@@ -11,6 +11,7 @@ import NavBar from '../../features/nav/NavBar';
 import { Container } from 'semantic-ui-react';
 import Sandbox from '../../features/sandbox/Sandbox';
 import ModalManager from '../common/modals/ModalManager';
+import ErrorComponent from '../common/errors/ErrorComponent';
 
 function App() {
   // use unique key property from location to force UI to refresh EventForm if going from
@@ -36,6 +37,7 @@ function App() {
                 component={EventForm}
                 key={key}
               />
+              <Route path="/error" component={ErrorComponent} />
             </Container>
           </>
         )}
