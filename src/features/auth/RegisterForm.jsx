@@ -7,35 +7,35 @@ import ModalWrapper from '../../app/common/modals/ModalWrapper';
 import MyTextInput from '../../app/common/form/MyTextInput';
 import { Button, Label, Divider } from 'semantic-ui-react';
 import { closeModal } from '../../app/common/modals/modalReducer';
-import { signInWithEmail } from '../../app/firestore/firebaseService';
+import { registerInFirebase } from '../../app/firestore/firebaseService';
 import SocialLogin from './SocialLogin';
 
-function LoginForm() {
-  const LoginSchema = Yup.object().shape({
+function RegisterForm() {
+  const RegisterSchema = Yup.object().shape({
+    displayName: Yup.string().required(),
     email: Yup.string().required().email(),
     password: Yup.string().required(),
   });
-
   const dispatch = useDispatch();
   return (
-    <ModalWrapper size="mini" header="Sign in to Re-vents">
+    <ModalWrapper size="mini" header="Register to Re-vents">
       <Formik
-        initialValues={{ email: '', password: '' }}
-        validationSchema={LoginSchema}
+        initialValues={{ displayName: '', email: '', password: '' }}
+        validationSchema={RegisterSchema}
         onSubmit={async (values, { setSubmitting, setErrors }) => {
           try {
-            await signInWithEmail(values);
+            await registerInFirebase(values);
             setSubmitting(false);
             dispatch(closeModal());
           } catch (error) {
-            console.log(error);
-            setErrors({ auth: 'Problem with username or password' });
             setSubmitting(false);
+            setErrors({ auth: error.message });
           }
         }}
       >
         {({ isSubmitting, isValid, dirty, errors }) => (
           <Form className="ui form">
+            <MyTextInput name="displayName" placeholder="DisplayName" />
             <MyTextInput name="email" placeholder="Email Address" />
             <MyTextInput
               name="password"
@@ -57,7 +57,7 @@ function LoginForm() {
               fluid
               size="large"
               color="teal"
-              content="Login"
+              content="Register"
             />
             <Divider horizontal>Or</Divider>
             <SocialLogin />
@@ -68,4 +68,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default RegisterForm;

@@ -12,12 +12,19 @@ import { Container } from 'semantic-ui-react';
 import Sandbox from '../../features/sandbox/Sandbox';
 import ModalManager from '../common/modals/ModalManager';
 import ErrorComponent from '../common/errors/ErrorComponent';
+import AccountPage from '../../features/auth/AccountPage';
+import { useSelector } from 'react-redux';
+import LoadingComponent from './LoadingComponent';
 
 function App() {
   // use unique key property from location to force UI to refresh EventForm if going from
   // editing --> creating new form. Otherwise, old values from editing will still exist in
   // input fields on create form
   const { key } = useLocation();
+  const { initialized } = useSelector(state => state.async);
+
+  if (!initialized) return <LoadingComponent content="Loading app..." />;
+
   return (
     <>
       <ModalManager />
@@ -37,6 +44,7 @@ function App() {
                 component={EventForm}
                 key={key}
               />
+              <Route path="/account" component={AccountPage} />
               <Route path="/error" component={ErrorComponent} />
             </Container>
           </>
