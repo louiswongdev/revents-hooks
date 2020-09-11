@@ -34,7 +34,7 @@ function ProfileForm({ profile }) {
           <MyTextArea name="description" placeholder="Description" />
           <Button
             loading={isSubmitting}
-            displayName={isSubmitting || !isValid || !dirty}
+            disabled={isSubmitting || !isValid || !dirty}
             float="right"
             size="large"
             type="submit"
